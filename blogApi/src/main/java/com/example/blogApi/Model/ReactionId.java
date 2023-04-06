@@ -1,0 +1,28 @@
+package com.example.blogApi.Model;
+
+import jakarta.persistence.IdClass;
+
+import java.io.Serializable;
+
+public class ReactionId implements Serializable {
+    private Long userId;
+    private Long postId;
+
+    public ReactionId() {
+    }
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public Long getPostId() {
+        return postId;
+    }
+
+    public void setPostId(Long postId) {
+        this.postId = postId;
+    }
+}

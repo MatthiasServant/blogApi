@@ -1,4 +1,4 @@
-package Model;
+package com.example.blogApi.Model;
 
 public enum ReactionType {
     LIKE,
