@@ -28,11 +28,7 @@ public class ReactionService {
     }
 
     public Reaction createReactionForPostWithUserId(Reaction reaction, Long postId, Long userId) {
-        User newUser = userRepository.findById(userId).get();
-        Post newPost = postRepository.findById(postId).get();
-        reaction.setUserId((Long) newUser.getId());
-        reaction.setPostId((Long) newPost.getId());
-        return reactionRepository.save(reaction);
+        return reactionRepository.save(new Reaction( reaction.getType(), userId, postId));
     }
 
     public Reaction updateReactionByUserIdAndPostId(Reaction reaction, Long userId, Long postId){

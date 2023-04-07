@@ -1,12 +1,6 @@
 package com.example.blogApi.Repository;
 
-import com.example.blogApi.Model.Post;
-import com.example.blogApi.Model.Reaction;
-import com.example.blogApi.Model.ReactionType;
-import com.example.blogApi.Model.User;
-import com.example.blogApi.Repository.PostRepository;
-import com.example.blogApi.Repository.ReactionRepository;
-import com.example.blogApi.Repository.UserRepository;
+import com.example.blogApi.Model.*;
 import com.github.javafaker.Faker;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,16 +15,19 @@ public class SeedDataLoader implements CommandLineRunner {
     private final UserRepository userRepository;
     private final ReactionRepository reactionRepository;
     private final PostRepository postRepository;
+
+    private final ReportRepository reportRepository;
     private final Faker faker;
 
     private final ReactionType[] reactionTypes;
 
     private static final Random PRNG = new Random();
 
-    public SeedDataLoader(UserRepository userRepository, ReactionRepository reactionRepository, PostRepository postRepository) {
+    public SeedDataLoader(UserRepository userRepository, ReactionRepository reactionRepository, PostRepository postRepository, ReportRepository reportRepository) {
         this.userRepository = userRepository;
         this.reactionRepository = reactionRepository;
         this.postRepository = postRepository;
+        this.reportRepository = reportRepository;
         reactionTypes = ReactionType.values();
         this.faker = new Faker();
     }
@@ -38,6 +35,7 @@ public class SeedDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Seeding data...");
+        reportRepository.deleteAll();
         reactionRepository.deleteAll();
         postRepository.deleteAll();
         userRepository.deleteAll();
@@ -76,6 +74,21 @@ public class SeedDataLoader implements CommandLineRunner {
                 }
             }
         }
+
+        List<User> users = userRepository.findAll();
+        List<Post> posts = postRepository.findAll();
+        Random random = new Random();
+
+        for (int i = 0; i < 1000; i++) {
+            Long userId = (Long) users.get(random.nextInt(users.size())).getId();
+            Long postId = (Long) posts.get(random.nextInt(posts.size())).getId();
+
+            if (!reportRepository.existsByUserIdAndPostId(userId, postId)) {
+                Report report = new Report(userId, postId, faker.lorem().sentence());
+                reportRepository.save(report);
+            }
+        }
+
         System.out.println("Seeding data complete!");
     }
 }
