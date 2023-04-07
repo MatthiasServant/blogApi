@@ -2,6 +2,7 @@ package com.example.blogApi.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,11 +24,8 @@ public class User {
 
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Collection<Post> posts;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Collection<Reaction> reactions;
+    public User() {
+    }
 
     //getters and setters
     public void setFirstName(String firstName) {
@@ -62,21 +60,5 @@ public class User {
 
     public Object getId() {
         return this.id;
-    }
-
-    public Collection<Post> getPosts() {
-        return posts;
-    }
-
-    public Collection<Reaction> getReactions() {
-        return reactions;
-    }
-
-    public void addPost(Post post) {
-        this.posts.add(post);
-    }
-
-    public void addReaction(Reaction reaction) {
-        this.reactions.add(reaction);
     }
 }

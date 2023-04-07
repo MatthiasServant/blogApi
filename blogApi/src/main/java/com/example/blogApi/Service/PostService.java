@@ -24,8 +24,6 @@ public class PostService {
     public Post createPostForUser(Post post, Long id) {
         userRepository.findById(id).ifPresent(user -> {
             post.setAuthorId((Long) user.getId());
-            user.addPost(post);
-            userRepository.save(user);
         });
         return postRepository.save(post);
     }

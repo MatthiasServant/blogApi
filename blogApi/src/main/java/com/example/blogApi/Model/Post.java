@@ -3,6 +3,7 @@ package com.example.blogApi.Model;
 import jakarta.persistence.*;
 
 import javax.net.ssl.SSLSession;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,11 +18,9 @@ public class Post {
 
     private Long authorId;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Collection<Reaction> reactions;
-
-    public Post(String content) {
+    public Post(String content, Long authorId) {
         this.content = content;
+        this.authorId = authorId;
     }
 
     public Post() {
@@ -46,9 +45,5 @@ public class Post {
 
     public Object getId() {
         return this.id;
-    }
-
-    public void addReaction(Reaction reaction) {
-        this.reactions.add(reaction);
     }
 }

@@ -15,8 +15,10 @@ public class Reaction {
     @Id
     private Long postId;
 
-    public Reaction(ReactionType reactionType) {
+    public Reaction(ReactionType reactionType, Long userId, Long postId) {
         this.type = reactionType;
+        this.userId = userId;
+        this.postId = postId;
     }
 
     public Reaction() {
@@ -46,6 +48,10 @@ public class Reaction {
 
     public void setPostId(Long postId) {
         this.postId = postId;
+    }
+
+    public void setReactionType(ReactionType reactionType) {
+        this.type = reactionType;
     }
 }
 

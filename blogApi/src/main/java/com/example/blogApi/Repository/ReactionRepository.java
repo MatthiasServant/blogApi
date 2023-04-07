@@ -11,4 +11,8 @@ import java.util.List;
 public interface ReactionRepository extends JpaRepository<Reaction, Long> {
     List<Reaction> findAllByUserIdAndPostId (Long userId, Long postId);
     List<Reaction> findAllByUserId (Long userId);
+
+    boolean existsByUserIdAndPostId(Long userId, Long postId);
+
+    long countByPostId(Long postId);
 }
