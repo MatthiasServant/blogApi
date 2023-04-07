@@ -2,6 +2,7 @@ package com.example.blogApi.Service;
 
 import com.example.blogApi.Model.Post;
 import com.example.blogApi.Repository.PostRepository;
+import com.example.blogApi.Repository.ReactionRepository;
 import com.example.blogApi.Repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,12 @@ public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository, UserRepository userRepository) {
+    private final ReactionRepository reactionRepository;
+
+    public PostService(PostRepository postRepository, UserRepository userRepository, ReactionRepository reactionRepository) {
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.reactionRepository = reactionRepository;
     }
 
     public List<Post> getPostsByUserId(Long id) {
@@ -41,6 +45,7 @@ public class PostService {
     public void deletePostByUserId(Long postId, Long userId) {
         Post post = postRepository.findById(postId).orElse(null);
         if (post != null && post.getAuthorId().equals(userId)) {
+            reactionRepository.deleteAll(reactionRepository.findAllByPostId(postId));
             postRepository.deleteById(postId);
         }
     }
