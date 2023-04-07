@@ -59,4 +59,12 @@ public class ReactionService {
     public List<Reaction> getReactionsByUserId(Long id) {
         return reactionRepository.findAllByUserId(id);
     }
+
+    public Reaction getReactionById(Long id) {
+        return reactionRepository.findById(id).orElse(null);
+    }
+
+    public List<Reaction> getReactionsByPostId(Long id) {
+        return reactionRepository.findAllByPostId(id);
+    }
 }

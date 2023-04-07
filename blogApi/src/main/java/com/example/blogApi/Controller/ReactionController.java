@@ -22,9 +22,14 @@ public class ReactionController {
         return ResponseEntity.ok(reactionService.getAllReactions());
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/user/{userId}")
     public ResponseEntity<List<Reaction>> getReactionsByUserId(@PathVariable("userId") Long id) {
         return ResponseEntity.ok(reactionService.getReactionsByUserId(id));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Reaction> getReactionById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(reactionService.getReactionById(id));
     }
 
     @PutMapping("/{userId}/{postId}")
@@ -41,5 +46,10 @@ public class ReactionController {
     public ResponseEntity<Void> deleteReactionByUserIdAndPostId(@PathVariable("postId") Long postId, @PathVariable("userId") Long userId) {
         reactionService.deleteReactionByUserAndPostId(postId, userId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<Reaction>> getReactionsByPostId(@PathVariable("postId") Long id) {
+        return ResponseEntity.ok(reactionService.getReactionsByPostId(id));
     }
 }
